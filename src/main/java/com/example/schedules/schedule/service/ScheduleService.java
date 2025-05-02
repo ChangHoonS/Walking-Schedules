@@ -54,7 +54,7 @@ public class ScheduleService {
 			.collect(Collectors.toList());
 	}
 
-	public ScheduleResponseDto updateSchedule(Long id) {
+	public ScheduleResponseDto findSchedule(Long id) {
 
 		Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
 

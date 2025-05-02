@@ -1,14 +1,14 @@
-package com.example.schedules.schedule.repository;
+package com.example.schedules.comment.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.schedules.schedule.entity.Schedule;
+import com.example.schedules.comment.entity.Comment;
 
-public interface ScheduleRepository extends JpaRepository <Schedule, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-	default Schedule findByIdOrElseThrow(Long id) {
+	default Comment findByIdOrElseThrow(Long id) {
 		return findById(id)
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
 

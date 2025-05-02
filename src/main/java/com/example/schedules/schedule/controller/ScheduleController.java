@@ -21,13 +21,13 @@ import com.example.schedules.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/schedules")
 @RequiredArgsConstructor
 public class ScheduleController {
 
 	private final ScheduleService scheduleService;
 
-	@PostMapping("/schedules")
+	@PostMapping
 	public ResponseEntity<ScheduleResponseDto> registerSchedule(@RequestBody ScheduleRequestDto scheduleRequestDto) {
 
 		ScheduleResponseDto scheduleResponseDto = scheduleService.registerSchedule(scheduleRequestDto);
@@ -35,7 +35,7 @@ public class ScheduleController {
 		return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
 	}
 
-	@PatchMapping("/schedules/{id}")
+	@PatchMapping("/{id}")
 	public ResponseEntity<ScheduleResponseDto> updateSchedule(
 		@PathVariable Long id,
 		@RequestBody ScheduleUpdateRequestDto scheduleUpdateRequestDto) {
@@ -45,7 +45,7 @@ public class ScheduleController {
 		return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
 	}
 
-	@GetMapping("/schedules")
+	@GetMapping
 	public ResponseEntity<List<ScheduleResponseDto>> findAll() {
 
 		List<ScheduleResponseDto> findAllSchedule = scheduleService.findAll();
@@ -53,15 +53,15 @@ public class ScheduleController {
 		return new ResponseEntity<>(findAllSchedule, HttpStatus.OK);
 	}
 
-	@GetMapping("/schedules/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<ScheduleResponseDto> findById(@PathVariable Long id) {
 
-		ScheduleResponseDto scheduleResponseDto = scheduleService.updateSchedule(id);
+		ScheduleResponseDto scheduleResponseDto = scheduleService.findSchedule(id);
 
 		return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/schedules/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 
 		scheduleService.delete(id);
