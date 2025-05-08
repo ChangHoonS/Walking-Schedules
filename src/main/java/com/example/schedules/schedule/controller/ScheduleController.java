@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.schedules.schedule.dto.requestdto.ScheduleRequestDto;
 import com.example.schedules.schedule.dto.requestdto.ScheduleUpdateRequestDto;
+import com.example.schedules.schedule.dto.responsedto.ScheduleFindAllResponseDto;
 import com.example.schedules.schedule.dto.responsedto.ScheduleResponseDto;
 import com.example.schedules.schedule.service.ScheduleService;
 
@@ -46,9 +47,9 @@ public class ScheduleController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ScheduleResponseDto>> findAll() {
+	public ResponseEntity<List<ScheduleFindAllResponseDto>> findAll() {
 
-		List<ScheduleResponseDto> findAllSchedule = scheduleService.findAll();
+		List<ScheduleFindAllResponseDto> findAllSchedule = scheduleService.findAll();
 
 		return new ResponseEntity<>(findAllSchedule, HttpStatus.OK);
 	}

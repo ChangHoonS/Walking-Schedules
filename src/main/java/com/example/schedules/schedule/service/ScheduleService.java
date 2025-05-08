@@ -1,12 +1,12 @@
 package com.example.schedules.schedule.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.example.schedules.schedule.dto.requestdto.ScheduleRequestDto;
 import com.example.schedules.schedule.dto.requestdto.ScheduleUpdateRequestDto;
+import com.example.schedules.schedule.dto.responsedto.ScheduleFindAllResponseDto;
 import com.example.schedules.schedule.dto.responsedto.ScheduleResponseDto;
 import com.example.schedules.schedule.entity.Schedule;
 import com.example.schedules.schedule.repository.ScheduleRepository;
@@ -44,14 +44,10 @@ public class ScheduleService {
 		return ScheduleResponseDto.from(findByIdSchedule);
 	}
 
-	public List<ScheduleResponseDto> findAll() {
+	public List<ScheduleFindAllResponseDto> findAll() {
 
-		List<Schedule> schedule = scheduleRepository.findAll();
+		return scheduleRepository.findSchedulesCommentCount();
 
-		return schedule
-			.stream()
-			.map(ScheduleResponseDto::from)
-			.collect(Collectors.toList());
 	}
 
 	public ScheduleResponseDto findSchedule(Long id) {
@@ -68,4 +64,9 @@ public class ScheduleService {
 
 		scheduleRepository.delete(findByIdSchedule);
 	}
+
+	// public List<ScheduleCommentCountDto> getScheduleCommentCounts() {
+	// 	return scheduleRepository.findScheduleCommentCounts();
+	// }
+
 }

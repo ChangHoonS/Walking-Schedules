@@ -5,6 +5,7 @@ import com.example.schedules.common.entity.BaseEntity;
 import com.example.schedules.schedule.entity.Schedule;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,7 +30,7 @@ public class Comment extends BaseEntity {
 
 	private String content;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "schedule_id")
 	private Schedule schedule;
 
