@@ -65,8 +65,4 @@ public class ScheduleService {
 		scheduleRepository.delete(findByIdSchedule);
 	}
 
-	// public List<ScheduleCommentCountDto> getScheduleCommentCounts() {
-	// 	return scheduleRepository.findScheduleCommentCounts();
-	// }
-
 }
