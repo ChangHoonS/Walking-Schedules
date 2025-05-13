@@ -19,6 +19,7 @@ import com.example.schedules.comment.dto.responsedto.CommentGetResponseDto;
 import com.example.schedules.comment.dto.responsedto.CommentResponseDto;
 import com.example.schedules.comment.service.CommentService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -30,6 +31,7 @@ public class CommentController {
 
 	@PostMapping
 	public ResponseEntity<CommentResponseDto> registerComment(
+		@Valid
 		@PathVariable Long scheduleId,
 		@RequestBody CommentRequestDto commentRequestDto) {
 
@@ -40,6 +42,7 @@ public class CommentController {
 
 	@PatchMapping("/{id}")
 	public ResponseEntity<CommentResponseDto> updateComment(
+		@Valid
 		@PathVariable Long scheduleId,
 		@PathVariable Long id,
 		@RequestBody CommentUpdateRequestDto commentUpdateRequestDto) {

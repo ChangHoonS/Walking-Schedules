@@ -1,4 +1,4 @@
-package com.example.schedules.comment.dto.requestdto;
+package com.example.schedules.undercomment.dto.requestdto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CommentRequestDto {
+public class UnderCommentRequestDto {
 
 	@NotBlank(message = "작성자는 필수입니다.")
 	private final String writerId;

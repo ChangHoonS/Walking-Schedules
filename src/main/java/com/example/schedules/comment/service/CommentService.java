@@ -11,6 +11,8 @@ import com.example.schedules.comment.dto.responsedto.CommentGetResponseDto;
 import com.example.schedules.comment.dto.responsedto.CommentResponseDto;
 import com.example.schedules.comment.entity.Comment;
 import com.example.schedules.comment.repository.CommentRepository;
+import com.example.schedules.common.exception.CustomException;
+import com.example.schedules.common.exception.ErrorCode;
 import com.example.schedules.schedule.entity.Schedule;
 import com.example.schedules.schedule.repository.ScheduleRepository;
 
@@ -47,6 +49,10 @@ public class CommentService {
 
 		Comment findByIdComment = commentRepository.findByIdOrElseThrow(id);
 
+		if(!findByIdComment.getSchedule().getId().equals(scheduleId)){
+			throw new CustomException(ErrorCode.SCHEDULE_NOT_EQUAL);
+		}
+
 		findByIdComment.updateComment(commentUpdateRequestDto);
 
 		return CommentResponseDto.from(findByIdComment);
@@ -70,6 +76,10 @@ public class CommentService {
 
 		Comment findComment = commentRepository.findByIdOrElseThrow(id);
 
+		if(!findComment.getSchedule().getId().equals(scheduleId)){
+			throw new CustomException(ErrorCode.SCHEDULE_NOT_EQUAL);
+		}
+
 		return CommentGetResponseDto.from(findComment);
 	}
 
@@ -79,6 +89,10 @@ public class CommentService {
 		getScheduleId(scheduleId);
 
 		Comment findByIdComment = commentRepository.findByIdOrElseThrow(id);
+
+		if(!findByIdComment.getSchedule().getId().equals(scheduleId)){
+			throw new CustomException(ErrorCode.SCHEDULE_NOT_EQUAL);
+		}
 
 		commentRepository.delete(findByIdComment);
 	}

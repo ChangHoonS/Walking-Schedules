@@ -17,8 +17,10 @@ import com.example.schedules.schedule.dto.requestdto.ScheduleRequestDto;
 import com.example.schedules.schedule.dto.requestdto.ScheduleUpdateRequestDto;
 import com.example.schedules.schedule.dto.responsedto.ScheduleFindAllResponseDto;
 import com.example.schedules.schedule.dto.responsedto.ScheduleResponseDto;
+import com.example.schedules.schedule.dto.responsedto.ScheduleWithCommentResponseDto;
 import com.example.schedules.schedule.service.ScheduleService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -29,7 +31,8 @@ public class ScheduleController {
 	private final ScheduleService scheduleService;
 
 	@PostMapping
-	public ResponseEntity<ScheduleResponseDto> registerSchedule(@RequestBody ScheduleRequestDto scheduleRequestDto) {
+	public ResponseEntity<ScheduleResponseDto> registerSchedule(
+		@Valid @RequestBody ScheduleRequestDto scheduleRequestDto) {
 
 		ScheduleResponseDto scheduleResponseDto = scheduleService.registerSchedule(scheduleRequestDto);
 
@@ -38,6 +41,7 @@ public class ScheduleController {
 
 	@PatchMapping("/{id}")
 	public ResponseEntity<ScheduleResponseDto> updateSchedule(
+		@Valid
 		@PathVariable Long id,
 		@RequestBody ScheduleUpdateRequestDto scheduleUpdateRequestDto) {
 
@@ -55,11 +59,11 @@ public class ScheduleController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ScheduleResponseDto> findById(@PathVariable Long id) {
+	public ResponseEntity<ScheduleWithCommentResponseDto> findById(@PathVariable Long id) {
 
-		ScheduleResponseDto scheduleResponseDto = scheduleService.findSchedule(id);
+		ScheduleWithCommentResponseDto scheduleWithCommentResponseDto = scheduleService.findSchedule(id);
 
-		return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
+		return new ResponseEntity<>(scheduleWithCommentResponseDto, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")

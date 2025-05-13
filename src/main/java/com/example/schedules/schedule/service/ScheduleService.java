@@ -1,13 +1,19 @@
 package com.example.schedules.schedule.service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.example.schedules.comment.dto.responsedto.CommentGetResponseDto;
+import com.example.schedules.comment.entity.Comment;
+import com.example.schedules.comment.repository.CommentRepository;
 import com.example.schedules.schedule.dto.requestdto.ScheduleRequestDto;
 import com.example.schedules.schedule.dto.requestdto.ScheduleUpdateRequestDto;
 import com.example.schedules.schedule.dto.responsedto.ScheduleFindAllResponseDto;
 import com.example.schedules.schedule.dto.responsedto.ScheduleResponseDto;
+import com.example.schedules.schedule.dto.responsedto.ScheduleWithCommentResponseDto;
 import com.example.schedules.schedule.entity.Schedule;
 import com.example.schedules.schedule.repository.ScheduleRepository;
 
@@ -19,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class ScheduleService {
 
 	private final ScheduleRepository scheduleRepository;
+	private final CommentRepository commentRepository;
 
 	@Transactional
 	public ScheduleResponseDto registerSchedule(ScheduleRequestDto scheduleRequestDto) {
@@ -50,11 +57,18 @@ public class ScheduleService {
 
 	}
 
-	public ScheduleResponseDto findSchedule(Long id) {
+	public ScheduleWithCommentResponseDto findSchedule(Long id) {
 
 		Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
 
-		return ScheduleResponseDto.from(findSchedule);
+		List<Comment> comment = commentRepository.findAllByScheduleId(id);
+
+		List<CommentGetResponseDto> commentGetResponseDto = comment.stream()
+			.sorted(Comparator.comparing(Comment::getCreatedAt))
+			.map(CommentGetResponseDto::from)
+			.collect(Collectors.toList());
+
+		return ScheduleWithCommentResponseDto.from(findSchedule, commentGetResponseDto);
 	}
 
 	@Transactional
